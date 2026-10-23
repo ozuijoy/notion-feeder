@@ -10,12 +10,12 @@
   "author": "ozuijoy",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "^2.2.15",
+    "@notionhq/client": "^5.28.0",
     "@tryfabric/martian": "^1.2.4",
     "rss-parser": "^3.13.0",
-    "turndown": "^7.2.0"
+    "turndown": "^7.2.4"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   }
 }
