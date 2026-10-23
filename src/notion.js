@@ -14,21 +14,10 @@ const NOTION_FEEDS_DATABASE_ID = getRequiredEnv('NOTION_FEEDS_DATABASE_ID');
 
 const notion = new Client({ auth: NOTION_API_TOKEN });
 
-/**
- * Query a database using the v5 low-level request() method.
- * This preserves backward compatibility with the /databases/{id}/query endpoint.
- */
-async function queryDatabase(databaseId, params = {}) {
-  return notion.request({
-    path: `databases/${databaseId}/query`,
-    method: 'POST',
-    body: params,
-  });
-}
-
 export async function getFeedUrlsFromNotion() {
   try {
-    const response = await queryDatabase(NOTION_FEEDS_DATABASE_ID, {
+    const response = await notion.dataSources.query({
+      data_source_id: NOTION_FEEDS_DATABASE_ID,
       filter: {
         property: 'Enabled',
         checkbox: { equals: true },
@@ -72,7 +61,8 @@ export async function deleteOldUnreadFeedItemsFromNotion() {
   fetchBeforeDate.setDate(fetchBeforeDate.getDate() - 30);
 
   try {
-    const response = await queryDatabase(NOTION_READER_DATABASE_ID, {
+    const response = await notion.dataSources.query({
+      data_source_id: NOTION_READER_DATABASE_ID,
       filter: {
         and: [
           {
