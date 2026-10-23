@@ -16,8 +16,8 @@ const notion = new Client({ auth: NOTION_API_TOKEN });
 
 export async function getFeedUrlsFromNotion() {
   try {
-    const response = await notion.dataSources.query({
-      data_source_id: NOTION_FEEDS_DATABASE_ID,
+    const response = await notion.databases.query({
+      database_id: NOTION_FEEDS_DATABASE_ID,
       filter: {
         property: 'Enabled',
         checkbox: { equals: true },
@@ -61,8 +61,8 @@ export async function deleteOldUnreadFeedItemsFromNotion() {
   fetchBeforeDate.setDate(fetchBeforeDate.getDate() - 30);
 
   try {
-    const response = await notion.dataSources.query({
-      data_source_id: NOTION_READER_DATABASE_ID,
+    const response = await notion.databases.query({
+      database_id: NOTION_READER_DATABASE_ID,
       filter: {
         and: [
           {
